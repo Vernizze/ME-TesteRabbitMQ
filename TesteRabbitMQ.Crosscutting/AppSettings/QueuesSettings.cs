@@ -1,6 +1,4 @@
-﻿using TesteRabbitMQ.Crosscutting.AppSettings;
-
-namespace TesteRabbitMQ.MassTransit.Subscriber.Settings
+﻿namespace TesteRabbitMQ.Crosscutting.AppSettings
 {
     public class QueuesSettings
         : BaseAppSettings

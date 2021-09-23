@@ -5,9 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using System;
 using System.Reflection;
+using TesteRabbitMQ.Crosscutting.AppSettings;
 using TesteRabbitMQ.Crosscutting.Extensions;
 using TesteRabbitMQ.MassTransit.Subscriber.Consumers;
-using TesteRabbitMQ.MassTransit.Subscriber.Settings;
 using TesteRabbitMQ.UseCases.GeneratePerson;
 
 namespace TesteRabbitMQ.MassTransit.Subscriber

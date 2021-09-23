@@ -4,8 +4,8 @@ using Serilog;
 using System;
 using System.Threading;
 using System.Timers;
+using TesteRabbitMQ.Crosscutting.AppSettings;
 using TesteRabbitMQ.Crosscutting.Extensions;
-using TesteRabbitMQ.MassTransit.Publisher.Settings;
 using TesteRabbitMQ.UseCases.GeneratePerson;
 
 namespace TesteRabbitMQ.MassTransit.Publisher

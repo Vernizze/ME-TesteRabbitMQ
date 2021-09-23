@@ -2,8 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using System.Reflection;
+using TesteRabbitMQ.Crosscutting.AppSettings;
 using TesteRabbitMQ.Crosscutting.Extensions;
-using TesteRabbitMQ.MassTransit.Publisher.Settings;
 using TesteRabbitMQ.UseCases.GeneratePerson;
 
 namespace TesteRabbitMQ.MassTransit.Publisher

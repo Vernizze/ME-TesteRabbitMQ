@@ -64,12 +64,10 @@ namespace TesteRabbitMQ.UseCases.AddPerson
 
                 var persons = getPersons?.Persons;
 
-                if (persons != null) 
-                {
+                if (persons != null)
                     _logger.Information($"Persons in Repository => {persons.Count}");
 
-                    persons.ForEach(p => _logger.Information($"Person Id: {p.Id} - Person Name: {p.Name} = Person Age: {p.Age}"));
-                }                
+                await _mediator.Send(new IndexingPerson.IndexingPerson.Model.Input { Person = person });
 
                 return await Task.FromResult(new Model.Output { Person = person });
             }

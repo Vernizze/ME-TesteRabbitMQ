@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Options;
 using System;
 using System.Threading.Tasks;
-using TesteRabbitMQ.MassTransit.Publisher.Settings;
+using TesteRabbitMQ.Crosscutting.AppSettings;
 
 namespace TesteRabbitMQ.MassTransit.Publisher
 {
@@ -11,7 +11,6 @@ namespace TesteRabbitMQ.MassTransit.Publisher
         #region Variables
 
         private readonly QueuesSettings _queueSettings;
-
 
         #endregion
 

@@ -1,6 +1,6 @@
-﻿using TesteRabbitMQ.UseCases.Data.Entities.Base;
+﻿using TesteRabbitMQ.DataTypes.Entities.Base;
 
-namespace TesteRabbitMQ.UseCases.Data.Entities
+namespace TesteRabbitMQ.DataTypes.Entities
 {
     public class Person
         : BaseEntity

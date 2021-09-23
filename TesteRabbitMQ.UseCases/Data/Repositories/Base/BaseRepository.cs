@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TesteRabbitMQ.UseCases.Data.Entities.Base;
+using TesteRabbitMQ.DataTypes.Entities.Base;
 
 namespace TesteRabbitMQ.UseCases.Data.Repositories.Base
 {
@@ -16,26 +16,26 @@ namespace TesteRabbitMQ.UseCases.Data.Repositories.Base
 
         #region Methods
 
-        public void Add(TEntity entity)
+        public virtual void Add(TEntity entity)
             => _entities.Add(entity.Id, entity);
 
-        public TEntity GetOne(Guid id)
+        public virtual TEntity GetOne(Guid id)
         {
             _entities.TryGetValue(id, out TEntity result);
 
             return result;
         }
 
-        public List<TEntity> GetAll()
+        public virtual List<TEntity> GetAll()
             => _entities.Values.ToList();
 
-        public void Update(TEntity entity)
+        public virtual void Update(TEntity entity)
         {
             if (_entities.TryGetValue(entity.Id, out TEntity result))
                 _entities[entity.Id] = result.UpdateEntity(result) as TEntity;
         }
 
-        public void Delete(Guid id)
+        public virtual void Delete(Guid id)
         {
             if (_entities.TryGetValue(id, out TEntity result))
                 _entities.Remove(id);

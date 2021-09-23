@@ -33,7 +33,7 @@ namespace TesteRabbitMQ.MassTransit.Subscriber.Consumers
         #region Methods
 
         public async Task Consume(ConsumeContext<Input> context)
-            => await _mediator.Send(new Input { Logger = _logger, Name = context.Message.Name, Age = context.Message.Age });
+            => await _mediator.Send(new Input { Name = context.Message.Name, Age = context.Message.Age });
 
         #endregion
     }

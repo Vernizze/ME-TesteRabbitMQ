@@ -1,10 +1,11 @@
 ﻿using MediatR;
 using Serilog;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using TesteRabbitMQ.UseCases.Data.Entities;
-using TesteRabbitMQ.UseCases.Data.Repositories;
+using TesteRabbitMQ.DataTypes.Entities;
+using TesteRabbitMQ.UseCases.Data.Databases;
 using TesteRabbitMQ.UseCases.Data.Repositories.Base;
 
 namespace TesteRabbitMQ.UseCases.AddPerson
@@ -16,7 +17,6 @@ namespace TesteRabbitMQ.UseCases.AddPerson
             public class Input
                 : IRequest<Output>
             {
-                public ILogger Logger { get; set; }
                 public string Name { get; set; }
                 public int Age { get; set; }
             }
@@ -30,6 +30,23 @@ namespace TesteRabbitMQ.UseCases.AddPerson
         public class Handler
             : IRequestHandler<Model.Input, Model.Output>
         {
+            #region Variables
+
+            private readonly IMediator _mediator;
+            private readonly ILogger _logger;
+
+            #endregion
+
+            #region Constructors
+
+            public Handler(ILogger logger, IMediator mediator) 
+            {
+                _logger = logger;
+                _mediator = mediator;
+            }
+
+            #endregion
+
             #region Methods
 
             public async Task<Model.Output> Handle(Model.Input request, CancellationToken cancellationToken)
@@ -41,19 +58,69 @@ namespace TesteRabbitMQ.UseCases.AddPerson
                     Name = request.Name
                 };
 
-                PersonRepository.Instance.Add(person);
+                AddPersonRepository.Instance.Add(person);
 
-                var persons = PersonRepository.Instance.GetAll();
+                var getPersons = await _mediator.Send(new GetAllPersons.GetAllPersons.Model.Input());
+
+                var persons = getPersons?.Persons;
 
                 if (persons != null) 
                 {
-                    request.Logger.Information($"Persons in Repository => {persons.Count}");
+                    _logger.Information($"Persons in Repository => {persons.Count}");
 
-                    persons.ForEach(p => request.Logger.Information($"Person Id: {p.Id} - Person Name: {p.Name} = Person Age: {p.Age}"));
+                    persons.ForEach(p => _logger.Information($"Person Id: {p.Id} - Person Name: {p.Name} = Person Age: {p.Age}"));
                 }                
 
                 return await Task.FromResult(new Model.Output { Person = person });
             }
+
+            #endregion
+        }
+
+        public class AddPersonRepository
+           : BaseRepository<Person>
+        {
+            #region Variables
+
+            private static AddPersonRepository _instance;
+
+            #endregion
+
+            #region Constructors
+
+            private AddPersonRepository()
+                => _entities = PersonDB.Instance.GetEntities;
+
+            #endregion
+
+            #region Attributes
+
+            public static AddPersonRepository Instance
+            {
+                get
+                {
+                    _instance = _instance ?? new AddPersonRepository();
+
+
+                    return _instance;
+                }
+            }
+
+            #endregion
+
+            #region Methods
+
+            public override Person GetOne(Guid id)
+                => throw new NotImplementedException("Método 'GetOne' não implementado nesse Repositório!");
+
+            public override List<Person> GetAll()
+                => throw new NotImplementedException("Método 'GetAll' não implementado nesse Repositório!");
+
+            public override void Update(Person entity)
+                => throw new NotImplementedException("Método 'Update' não implementado nesse Repositório!");
+
+            public override void Delete(Guid id)
+                => throw new NotImplementedException("Método 'Delete' não implementado nesse Repositório!");
 
             #endregion
         }
